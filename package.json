@@ -1,0 +1,77 @@
+{
+    "_comments": [
+        "Modifications to",
+        "https://github.com/jsynowiec/node-typescript-boilerplate/blob/32e3b53d62933438291a14e1d09904aed1df19d0/package.json",
+        "Copyright (c) 2017 Target Brands, Inc."
+    ],
+    "name": "graphql-liftoff",
+    "version": "1.0.0",
+    "description": "generates GraphQL schema language from API specifications and more",
+    "engineStrict": true,
+    "engines": {
+        "node": ">= 6.9.0"
+    },
+    "devDependencies": {
+        "coveralls": "^3.0.0",
+        "jest": "~21.2.0",
+        "rimraf": "~2.6.2",
+        "tslint": "~5.7.0",
+        "tsutils": "~2.9.0"
+    },
+    "scripts": {
+        "clean": "rimraf coverage build tmp",
+        "install": "tsc",
+        "build": "tsc",
+        "watch": "tsc -w",
+        "lint": "tslint -t stylish --type-check --project \"tsconfig.json\"",
+        "pretest": "tslint -t stylish --type-check --project \"tsconfig.json\"",
+        "test": "jest --no-cache --coverage",
+        "test-ci": "jest --ci --no-cache --coverage --coverageReporters lcov",
+        "test-only": "jest --no-cache",
+        "test:watch": "jest --watch",
+        "coverage": "open coverage/lcov-report/index.html",
+        "start": "node build/bin/cli.js"
+    },
+    "author": "Stephen Radachy <stephen.radachy@target.com>",
+    "contributors": [
+        "Sean C Ryan <Sean.C.Ryan@target.com>",
+        "Tim Schoenheider <Tim.Schoenheider@target.com>"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/target/graphql-liftoff.git"
+    },
+    "bugs": {
+        "url": "https://github.com/target/graphql-liftoff/issues"
+    },
+    "homepage": "https://github.com/target/graphql-liftoff#readme",
+    "dependencies": {
+        "@types/jest": "~21.1.1",
+        "@types/js-yaml": "^3.9.1",
+        "@types/node": "~6.0.88",
+        "@types/request": "^2.0.4",
+        "babel-jest": "^21.2.0",
+        "babel-plugin-transform-async-to-generator": "^6.24.1",
+        "babel-preset-node6": "^11.0.0",
+        "js-yaml": "^3.10.0",
+        "oas-raml-converter": "1.0.14",
+        "request": "^2.83.0",
+        "tslib": "~1.7.1",
+        "typescript": "~2.5.3"
+    },
+    "bin": {
+        "graphql-liftoff": "./bin/graphql-liftoff",
+        "gqllo": "./bin/graphql-liftoff"
+    },
+    "keywords": [
+        "graphql",
+        "liftoff",
+        "schema",
+        "definition",
+        "type",
+        "generator",
+        "swagger"
+    ],
+    "main": "build/main.js"
+}

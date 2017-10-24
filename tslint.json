@@ -1,0 +1,72 @@
+{
+    "_comments": [
+        "Modifications to",
+        "https://github.com/jsynowiec/node-typescript-boilerplate/blob/32e3b53d62933438291a14e1d09904aed1df19d0/tslint.json",
+        "Copyright (c) 2017 Target Brands, Inc."
+    ],
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "deprecation": true,
+    "encoding": true,
+    "import-spacing": true,
+    "indent": [true, "spaces", 4],
+    "linebreak-style": [true, "LF"],
+    "no-irregular-whitespace": true,
+    "no-unused-expression": false,
+    "no-var-keyword": true,
+    "object-literal-sort-keys": false,
+    "one-line": [true, "check-catch", "check-finally", "check-else"],
+    "one-variable-per-declaration": [true, "ignore-for-loop"],
+    "prefer-const": true,
+    "prefer-function-over-method": true,
+    "prefer-template": [true, "allow-single-concat"],
+    "promise-function-async": true,
+    "quotemark": [true, "single", "avoid-escape", "avoid-template"],
+    "semicolon": [true, "never"],
+    "space-within-parens": [true, 0],
+    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+    "variable-name": [true, "ban-keywords", "allow-leading-underscore"],
+    "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-module", "check-separator", "check-rest-spread", "check-type", "check-typecast", "check-type-operator", "check-preblock"],
+    "no-console": false,
+    "max-line-length": false
+  },
+  "rules": {
+    // rules duplicated with jsRules
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "deprecation": true,
+    "encoding": true,
+    "import-spacing": true,
+    "indent": [true, "spaces", 4],
+    "linebreak-style": [true, "LF"],
+    "no-irregular-whitespace": true,
+    "no-unused-expression": false,
+    "no-var-keyword": true,
+    "object-literal-sort-keys": false,
+    "one-line": [true, "check-catch", "check-finally", "check-else"],
+    "one-variable-per-declaration": [true, "ignore-for-loop"],
+    "prefer-const": true,
+    "prefer-function-over-method": true,
+    "prefer-template": [true, "allow-single-concat"],
+    "promise-function-async": true,
+    "quotemark": [true, "single", "avoid-escape", "avoid-template"],
+    "semicolon": [true, "never"],
+    "space-within-parens": [true, 0],
+    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+    "variable-name": [true, "ban-keywords", "allow-leading-underscore"],
+    "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-module", "check-separator", "check-rest-spread", "check-type", "check-typecast", "check-type-operator", "check-preblock"],
+    "no-console": false,
+    "max-line-length": false,
+
+    // typescript-only rules:
+    "interface-name": [true, "never-prefix"],
+    "no-default-export": true,
+    "no-require-imports": true,
+    "no-unused-variable": true,
+    "typedef": [true, "call-signature"]
+  },
+  "rulesDirectory": []
+}

@@ -1,0 +1,23 @@
+# Modifications to
+# https://github.com/jsynowiec/node-typescript-boilerplate/blob/32e3b53d62933438291a14e1d09904aed1df19d0/.editorconfig
+# Copyright (c) 2017 Target Brands, Inc.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+trim_trailing_whitespace = true
+
+[*.json]
+indent_size = 4
+indent_style = space
+
+[*.{js,ts}]
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+
+[*.md]
+insert_final_newline = false
+trim_trailing_whitespace = false

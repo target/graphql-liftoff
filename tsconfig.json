@@ -1,0 +1,24 @@
+{
+    "_comments": [
+        "Modifications to",
+        "https://github.com/jsynowiec/node-typescript-boilerplate/blob/32e3b53d62933438291a14e1d09904aed1df19d0/tsconfig.json",
+        "Copyright (c) 2017 Target Brands, Inc."
+    ],
+    "compilerOptions": {
+      "target": "ES2016",
+      "module": "commonjs",
+      "allowJs": true,
+      "outDir": "./build",
+      "rootDir": "./src",
+      "removeComments": true,
+      "strict": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "moduleResolution": "node",
+      "rootDirs": ["src/", "test/"],
+      "inlineSourceMap": true
+    },
+    "include": [
+      "src/"
+    ]
+  }
