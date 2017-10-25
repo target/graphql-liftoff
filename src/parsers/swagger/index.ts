@@ -33,7 +33,7 @@ function parseDefinitions(definitions: any[], ast: AST = {} as AST): AST {
 function parseDefinition(d: any, ast: AST): void {
     // no duplicate types
     if (!ast[d.name]) {
-        if (d.internalType === 'object' || !d.internalType) {
+        if ((d.internalType === 'object' && d.hasOwnProperty('properties')) || !d.internalType) {
 
             const astType = {} as GraphQLType
 
