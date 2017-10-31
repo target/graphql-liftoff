@@ -10,6 +10,7 @@
 **graphql-liftoff** is a GraphQL schema type generator. It takes in an existing data model and maps it to type definitions by using a domain specific parser. This reduces the amount of work needed to migrate existing REST APIs to GraphQL.
 
 # CLI Demo
+#
 
 [demo YAML source](https://github.com/OAI/OpenAPI-Specification/blob/db87315c2074ef69196dc0018335422dbfeb8a73/examples/v2.0/yaml/petstore.yaml)
 ![graphql-liftoff demo](resources/example.gif)
