@@ -42,7 +42,7 @@ describe('getContent', () => {
         // when
         return getContent(file).catch(err => {
             // then
-            expect(err.code).toEqual('ENOTSUP')
+            expect(err.code).toMatch(/E(NOTSUP|ISDIR)/)
         })
     })
 

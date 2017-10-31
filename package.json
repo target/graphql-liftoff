@@ -20,9 +20,9 @@
     },
     "scripts": {
         "clean": "rimraf coverage build tmp",
-        "install": "tsc",
-        "build": "tsc",
-        "watch": "tsc -w",
+        "install": "node_modules/typescript/bin/tsc",
+        "build": "node_modules/typescript/bin/tsc",
+        "watch": "node_modules/typescript/bin/tsc -w",
         "lint": "tslint -t stylish --type-check --project \"tsconfig.json\"",
         "pretest": "tslint -t stylish --type-check --project \"tsconfig.json\"",
         "test": "jest --no-cache --coverage",
