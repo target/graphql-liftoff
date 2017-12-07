@@ -46,3 +46,7 @@ export function parserUsage(parser: string, args: Arg[]) {
         console.log(`\t--${a.long},-${a.short}\t${a.description}`)
     })
 }
+
+export function convertSnakeToCamel(s: string) {
+    return s.replace(/(\_\w)/g, m => m[1].toUpperCase())
+}

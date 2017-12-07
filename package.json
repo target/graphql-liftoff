@@ -5,7 +5,7 @@
         "Copyright (c) 2017 Target Brands, Inc."
     ],
     "name": "graphql-liftoff",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "generates GraphQL schema language from API specifications and more",
     "engineStrict": true,
     "engines": {
