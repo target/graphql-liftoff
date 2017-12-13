@@ -47,6 +47,43 @@ export function parserUsage(parser: string, args: Arg[]) {
     })
 }
 
-export function convertSnakeToCamel(s: string) {
+function convertSnakeToCamel(s: string): string {
     return s.replace(/(\_\w)/g, m => m[1].toUpperCase())
+}
+
+export function toCamel(ast: AST): AST {
+    Object
+        .keys(ast)
+        .map((n: string, i: number) => {
+            ast[n].name = convertSnakeToCamel(ast[n].name)
+            ast[n].fields
+                .map((f: GraphQLField, fi: number) => {
+                    ast[n].fields[fi].name = convertSnakeToCamel(ast[n].fields[fi].name)
+                })
+        })
+    return ast
+}
+
+export function addPrefix(ast: AST, prefix: String): AST {
+    Object
+        .keys(ast)
+        .map((n: string, i: number) => {
+            ast[n].name = prefix + ast[n].name
+        })
+    return ast
+}
+
+export function isOptionSet(options: any, short: string, long: string): boolean {
+    if (options.hasOwnProperty(short) || options.hasOwnProperty(long)) {
+        return true
+    }
+    return false
+}
+
+export function getOptionValue(options: any, short: string, long: string): any {
+    if (options.hasOwnProperty(short)) {
+        return options[short]
+    } else if (options.hasOwnProperty(long)) {
+        return options[long]
+    }
 }
