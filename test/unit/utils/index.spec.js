@@ -71,7 +71,7 @@ describe('parser usage', () => {
         // given
         const parser = 'example'
         const args = []
-        const expected = `usage: graphql-liftoff example [--key=value|--key|-k] <filename|url|none-for-stdin>
+        const expected = `usage: graphql-liftoff example [--key=value|-k=value|--key|-k] <filename|url|none-for-stdin>
 
 options:
 \t--help,-h	Show this help documentation
@@ -93,7 +93,7 @@ options:
                 description: 'test description'
             }
         ]
-        const expected = `usage: graphql-liftoff example [--key=value|--key|-k] <filename|url|none-for-stdin>
+        const expected = `usage: graphql-liftoff example [--key=value|-k=value|--key|-k] <filename|url|none-for-stdin>
 
 options:
 \t--help,-h	Show this help documentation
