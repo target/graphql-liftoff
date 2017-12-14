@@ -41,7 +41,7 @@ export function parserUsage(parser: string, args: Arg[]) {
         description: 'Show this help documentation'
     } as Arg)
     const sorted = args.sort((a: Arg, b: Arg) => a.long.localeCompare(b.long))
-    console.log(`usage: ${(pkg as any).name} ${parser} [--key=value|--key|-k] <filename|url|none-for-stdin>\n\noptions:`)
+    console.log(`usage: ${(pkg as any).name} ${parser} [--key=value|-k=value|--key|-k] <filename|url|none-for-stdin>\n\noptions:`)
     sorted.map(a => {
         console.log(`\t--${a.long},-${a.short}\t${a.description}`)
     })
@@ -74,10 +74,7 @@ export function addPrefix(ast: AST, prefix: String): AST {
 }
 
 export function isOptionSet(options: any, short: string, long: string): boolean {
-    if (options.hasOwnProperty(short) || options.hasOwnProperty(long)) {
-        return true
-    }
-    return false
+    return options.hasOwnProperty(short) || options.hasOwnProperty(long)
 }
 
 export function getOptionValue(options: any, short: string, long: string): any {

@@ -10,7 +10,7 @@ let prefix: string = ''
 export async function parse(content: string, options: any): Promise<AST> {
     if (isOptionSet(options, 'c', 'camel-case')) { isCamelCase = true }
     if (isOptionSet(options, 'p', 'prefix-type-name')) {
-        prefix = String(getOptionValue(options, 'p', 'prefix-type-name'))
+        prefix = getOptionValue(options, 'p', 'prefix-type-name')
         isPrefix = true
     }
     if (isOptionSet(options, 'y', 'yaml')) { isYAML = true }
