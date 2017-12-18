@@ -52,25 +52,32 @@ function convertSnakeToCamel(s: string): string {
 }
 
 export function toCamel(ast: AST): AST {
-    Object
+    return Object
         .keys(ast)
-        .map((n: string, i: number) => {
-            ast[n].name = convertSnakeToCamel(ast[n].name)
-            ast[n].fields
-                .map((f: GraphQLField, fi: number) => {
-                    ast[n].fields[fi].name = convertSnakeToCamel(ast[n].fields[fi].name)
+        .reduce((acc: AST, cur: string, idx: number) => {
+            acc[cur] = {
+                name: convertSnakeToCamel(ast[cur].name),
+                description: ast[cur].description,
+                fields: ast[cur].fields.map(f => {
+                    f.name = convertSnakeToCamel(f.name)
+                    return f
                 })
-        })
-    return ast
+            } as GraphQLType
+            return acc
+        }, {} as AST)
 }
 
 export function addPrefix(ast: AST, prefix: String): AST {
-    Object
+    return Object
         .keys(ast)
-        .map((n: string, i: number) => {
-            ast[n].name = prefix + ast[n].name
-        })
-    return ast
+        .reduce((acc: AST, cur: string) => {
+            acc[cur] = {
+                name: prefix + ast[cur].name,
+                description: ast[cur].description,
+                fields: ast[cur].fields
+            } as GraphQLType
+            return acc
+        }, {} as AST)
 }
 
 export function isOptionSet(options: any, short: string, long: string): boolean {
