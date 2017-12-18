@@ -1,10 +1,19 @@
 import * as yml from 'js-yaml'
 import * as converter from 'oas-raml-converter'
-import { parserUsage } from '../../utils'
+import { addPrefix, getOptionValue, isOptionSet, parserUsage, toCamel } from '../../utils'
 
+let isYAML: boolean = false
+let isPrefix: boolean = false
+let isCamelCase: boolean = false
+
+let prefix: string = ''
 export async function parse(content: string, options: any): Promise<AST> {
-    let isYAML = false
-    if (options.hasOwnProperty('y') || options.hasOwnProperty('yaml')) { isYAML = true }
+    if (isOptionSet(options, 'c', 'camel-case')) { isCamelCase = true }
+    if (isOptionSet(options, 'p', 'prefix-type-name')) {
+        prefix = getOptionValue(options, 'p', 'prefix-type-name')
+        isPrefix = true
+    }
+    if (isOptionSet(options, 'y', 'yaml')) { isYAML = true }
     const transformer = new converter.Converter(converter.Formats.OAS20, converter.Formats.RAML)
     if (!isYAML) {
         content = yml.safeDump(JSON.parse(content))
@@ -17,6 +26,16 @@ export async function parse(content: string, options: any): Promise<AST> {
 export function usage(parser: string): void {
     const args = [
         {
+            short: 'c',
+            long: 'camel-case',
+            description: 'convert all keys from snake_case to camelCase'
+        },
+        {
+            short: 'p',
+            long: 'prefix-type-name',
+            description: '[--prefix-type-name|-prefix]="prefix" prefix type names'
+        },
+        {
             short: 'y',
             long: 'yaml',
             description: 'parse swagger specification of YAML format'
@@ -27,6 +46,8 @@ export function usage(parser: string): void {
 
 function parseDefinitions(definitions: any[], ast: AST = {} as AST): AST {
     definitions.map((d: any) => parseDefinition(d, ast))
+    if (isCamelCase) { ast = toCamel(ast) }
+    if (isPrefix) { ast = addPrefix(ast, prefix) }
     return ast
 }
 

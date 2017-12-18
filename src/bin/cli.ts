@@ -86,7 +86,7 @@ async function exec(parser: string, mArgs: string[], stdin: boolean): Promise<an
 }
 
 function usage(): void {
-    console.log(`usage: ${(pkg as any).name} [--help|-h] <parser> [--key=value|--key|-k] <filename|url|none-for-stdin>
+    console.log(`usage: ${(pkg as any).name} [--help|-h] <parser> [--key=value|-k=value|--key|-k] <filename|url|none-for-stdin>
 
 description:
 \t${(pkg as any).name} ${(pkg as any).description}

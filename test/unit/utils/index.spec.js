@@ -1,4 +1,4 @@
-import { getContent, parserUsage } from '../../../src/utils/index.ts'
+import { addPrefix, getContent, getOptionValue, isOptionSet, parserUsage, toCamel } from '../../../src/utils/index.ts'
 import packageJSON from '../../../package.json'
 
 describe('getContent', () => {
@@ -71,7 +71,7 @@ describe('parser usage', () => {
         // given
         const parser = 'example'
         const args = []
-        const expected = `usage: graphql-liftoff example [--key=value|--key|-k] <filename|url|none-for-stdin>
+        const expected = `usage: graphql-liftoff example [--key=value|-k=value|--key|-k] <filename|url|none-for-stdin>
 
 options:
 \t--help,-h	Show this help documentation
@@ -93,7 +93,7 @@ options:
                 description: 'test description'
             }
         ]
-        const expected = `usage: graphql-liftoff example [--key=value|--key|-k] <filename|url|none-for-stdin>
+        const expected = `usage: graphql-liftoff example [--key=value|-k=value|--key|-k] <filename|url|none-for-stdin>
 
 options:
 \t--help,-h	Show this help documentation
@@ -104,5 +104,105 @@ options:
 
         // then
         expect(consoleOutput).toEqual(expected)
+    })
+})
+
+describe('toCamel', () => {
+    it('should convert snake to camel case', () => {
+        // given
+        const input = {
+            test: {
+                name: 'snake_case',
+                fields: [
+                    {
+                        name: 'field_snake_case'
+                    }
+                ]
+            }
+        }
+
+        // when
+        const result = toCamel(input)
+
+        // then
+        expect(result).toEqual({ test: { name: 'snakeCase', fields: [ { name: 'fieldSnakeCase'}]}})
+    })
+})
+
+describe('addPrefix', () => {
+    it('should add a prefix', () => {
+        // given
+        const input = {
+            test: {
+                name: 'snake_case',
+                fields: [
+                    {
+                        name: 'field_snake_case'
+                    }
+                ]
+            }
+        }
+
+        // when
+        const result = addPrefix(input, 'TEST_')
+
+        // then
+        expect(result).toEqual({ test: { name: 'TEST_snake_case', fields: [ { name: 'field_snake_case'}]}})
+    })
+})
+
+describe('isOptionSet', () => {
+    it('should find the short option value', () => {
+        // given
+        const input = {
+            v: 'asdf'
+        }
+
+        // when
+        const result = isOptionSet(input, 'v', 'verylongargname')
+
+        // then
+        expect(result).toEqual(true)
+    })
+
+    it('should find the long option value', () => {
+        // given
+        const input = {
+            verylongargname: 'asdf'
+        }
+
+        // when
+        const result = isOptionSet(input, 'v', 'verylongargname')
+
+        // then
+        expect(result).toEqual(true)
+    })
+})
+
+describe('getOptionValue', () => {
+    it('should get the short option value', () => {
+        // given
+        const input = {
+            v: 'asdf'
+        }
+
+        // when
+        const result = getOptionValue(input, 'v', 'verylongargname')
+
+        // then
+        expect(result).toEqual('asdf')
+    })
+
+    it('should get the long option value', () => {
+        // given
+        const input = {
+            verylongargname: 'asdf'
+        }
+
+        // when
+        const result = getOptionValue(input, 'v', 'verylongargname')
+
+        // then
+        expect(result).toEqual('asdf')
     })
 })
