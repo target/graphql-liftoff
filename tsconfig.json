@@ -16,7 +16,10 @@
       "noFallthroughCasesInSwitch": true,
       "moduleResolution": "node",
       "rootDirs": ["src/", "test/"],
-      "inlineSourceMap": true
+      "inlineSourceMap": true,
+      "lib": [
+        "esnext"
+      ]
     },
     "include": [
       "src/"
