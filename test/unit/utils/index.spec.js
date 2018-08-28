@@ -113,9 +113,11 @@ describe('toCamel', () => {
         const input = {
             test: {
                 name: 'snake_case',
+                description: 'description1',
                 fields: [
                     {
-                        name: 'field_snake_case'
+                        name: 'field_snake_case',
+                        description: 'some description'
                     }
                 ]
             }
@@ -125,7 +127,22 @@ describe('toCamel', () => {
         const result = toCamel(input)
 
         // then
-        expect(result).toEqual({ test: { name: 'snakeCase', fields: [ { name: 'fieldSnakeCase'}]}})
+        // expect(result).toEqual({ test: { name: 'snakeCase', fields: [ { name: 'fieldSnakeCase'}]}})
+        expect(result).toEqual(
+            {
+                test: {
+                  name: 'SnakeCase',
+                  description: 'description1',
+                  fields: [
+                    {
+                      description: 'some description',
+                      name: 'fieldSnakeCase'
+                    }
+                  ]
+                }
+              }
+        )
+
     })
 })
 
@@ -133,11 +150,36 @@ describe('addPrefix', () => {
     it('should add a prefix', () => {
         // given
         const input = {
-            test: {
-                name: 'snake_case',
+            someType: {
+                name: 'SomeType',
+                description: 'test description',
                 fields: [
                     {
-                        name: 'field_snake_case'
+                        name: 'some_field',
+                        type: 'abc',
+                        description: 'test description'
+                    }
+                ]
+            },
+            test1: {
+                name: 'snake_case',
+                description: 'test description',
+                fields: [
+                    {
+                        name: 'field_snake_case',
+                        type: 'SomeType',
+                        description: 'test description'
+                    }
+                ]
+            },
+            test2: {
+                name: 'another_snake_case',
+                description: 'test description',
+                fields: [
+                    {
+                        name: 'field_snake_case',
+                        type: '[SomeType]',
+                        description: 'test description'
                     }
                 ]
             }
@@ -147,7 +189,43 @@ describe('addPrefix', () => {
         const result = addPrefix(input, 'TEST_')
 
         // then
-        expect(result).toEqual({ test: { name: 'TEST_snake_case', fields: [ { name: 'field_snake_case'}]}})
+        expect(result).toEqual(
+            {
+                someType: {
+                  description: 'test description',
+                  fields: [
+                    {
+                      description: 'test description',
+                      name: 'some_field',
+                      type: 'abc'
+                    }
+                  ],
+                  name: 'TEST_SomeType'
+                },
+                test1: {
+                  description: 'test description',
+                  fields: [
+                    {
+                      description: 'test description',
+                      name: 'field_snake_case',
+                      type: 'TEST_SomeType'
+                    }
+                  ],
+                  name: 'TEST_snake_case'
+                },
+                test2: {
+                  description: 'test description',
+                  fields: [
+                    {
+                      description: 'test description',
+                      name: 'field_snake_case',
+                      type: '[TEST_SomeType]'
+                    }
+                  ],
+                  name: 'TEST_another_snake_case'
+                }
+              }
+        )
     })
 })
 
