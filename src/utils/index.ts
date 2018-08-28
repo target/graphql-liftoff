@@ -56,7 +56,7 @@ export function toCamel(ast: AST): AST {
         .keys(ast)
         .reduce((acc: AST, cur: string, idx: number) => {
             acc[cur] = {
-                name: convertSnakeToCamel(ast[cur].name),
+                name: convertSnakeToPascal(ast[cur].name),
                 description: ast[cur].description,
                 fields: ast[cur].fields.map(f => {
                     f.name = convertSnakeToCamel(f.name)
@@ -68,13 +68,25 @@ export function toCamel(ast: AST): AST {
 }
 
 export function addPrefix(ast: AST, prefix: String): AST {
+    console.log("inside addPrefix")
+    console.log(JSON.stringify(ast))
+    const types = Object.keys(ast).map((f: any) => {
+        return ast[f].name
+    })
     return Object
         .keys(ast)
         .reduce((acc: AST, cur: string) => {
             acc[cur] = {
                 name: prefix + ast[cur].name,
                 description: ast[cur].description,
-                fields: ast[cur].fields
+                fields: ast[cur].fields.map(f => {
+                    if(types.includes(f.type)){
+                        f.type = `${prefix}${f.type}`
+                    }else if(types.includes(f.type.slice(1, -1))){
+                        f.type = `[${prefix}${f.type.slice(1, -1)}]`
+                    }
+                    return f
+                })
             } as GraphQLType
             return acc
         }, {} as AST)
@@ -89,5 +101,20 @@ export function getOptionValue(options: any, short: string, long: string): any {
         return options[short]
     } else if (options.hasOwnProperty(long)) {
         return options[long]
+    }
+}
+
+export function convertSnakeToPascal(s: string): string {
+    return convertSnakeToCamel(s).replace(/^\w/, c => c.toUpperCase())
+}
+
+export function inferTypeNameFromArrayName(arrayName: any): string {
+    // If the last character of the array name is 's', it removes the last character and conver remaining string to Pascal Case,
+    // Otherwise, it simply converts the name to Pascal Case. 
+    // It sometime generates name that may not be appropriate e.g.vendorReturnPolicies: [AAA_VendorReturnPolicie] 
+    if (arrayName.charAt(arrayName.length - 1) === 's') {
+        return convertSnakeToPascal(arrayName.slice(0, -1))
+    }else{
+        return convertSnakeToPascal(arrayName)
     }
 }
