@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import * as _ from 'lodash'
 import * as request from 'request'
 import * as pkg from '../../package.json'
 
@@ -47,7 +48,7 @@ export function parserUsage(parser: string, args: Arg[]) {
     })
 }
 
-function convertSnakeToCamel(s: string): string {
+ function convertSnakeToCamel(s: string): string {
     return s.replace(/(\_\w)/g, m => m[1].toUpperCase())
 }
 
@@ -68,11 +69,10 @@ export function toCamel(ast: AST): AST {
 }
 
 export function addPrefix(ast: AST, prefix: String): AST {
-    console.log("inside addPrefix")
-    console.log(JSON.stringify(ast))
-    const types = Object.keys(ast).map((f: any) => {
-        return ast[f].name
-    })
+
+
+    const types = _.map(ast, 'name')
+
     return Object
         .keys(ast)
         .reduce((acc: AST, cur: string) => {
@@ -106,15 +106,4 @@ export function getOptionValue(options: any, short: string, long: string): any {
 
 export function convertSnakeToPascal(s: string): string {
     return convertSnakeToCamel(s).replace(/^\w/, c => c.toUpperCase())
-}
-
-export function inferTypeNameFromArrayName(arrayName: any): string {
-    // If the last character of the array name is 's', it removes the last character and conver remaining string to Pascal Case,
-    // Otherwise, it simply converts the name to Pascal Case. 
-    // It sometime generates name that may not be appropriate e.g.vendorReturnPolicies: [AAA_VendorReturnPolicie] 
-    if (arrayName.charAt(arrayName.length - 1) === 's') {
-        return convertSnakeToPascal(arrayName.slice(0, -1))
-    }else{
-        return convertSnakeToPascal(arrayName)
-    }
 }

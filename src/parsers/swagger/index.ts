@@ -1,6 +1,8 @@
 import * as yml from 'js-yaml'
 import * as converter from 'oas-raml-converter'
-import { addPrefix, convertSnakeToPascal, getOptionValue, inferTypeNameFromArrayName, isOptionSet, parserUsage, toCamel } from '../../utils'
+import * as pluralize from 'pluralize'
+
+import { addPrefix, convertSnakeToPascal, getOptionValue, isOptionSet, parserUsage, toCamel } from '../../utils'
 
 let isYAML: boolean = false
 let isPrefix: boolean = false
@@ -60,7 +62,7 @@ function parseDefinition(d: any, ast: AST): void {
 
             // name and description
             if (d.internalType === 'array') {
-                astType.name = inferTypeNameFromArrayName(d.name)
+                astType.name = convertSnakeToPascal(pluralize(d.name, 1))
             }else {
                 astType.name = convertSnakeToPascal(d.name)
             }
@@ -89,7 +91,7 @@ function parseDefinition(d: any, ast: AST): void {
                     if (p.items.reference) {
                         type = `[${p.items.reference}]`
                     }else if (p.items.internalType === 'object') {
-                        type = `[${inferTypeNameFromArrayName(p.name)}]`
+                        type = `[${convertSnakeToPascal(pluralize(p.name, 1))}]`
                         parseDefinition(p, ast)
                     }else {
                         type = `[${convertType(p.internalType)}]`

@@ -49,13 +49,17 @@
     "dependencies": {
         "@types/jest": "~21.1.1",
         "@types/js-yaml": "^3.9.1",
+        "@types/lodash": "^4.14.116",
         "@types/node": "~6.0.88",
+        "@types/pluralize": "^0.0.29",
         "@types/request": "^2.0.4",
         "babel-jest": "^21.2.0",
         "babel-plugin-transform-async-to-generator": "^6.24.1",
         "babel-preset-node6": "^11.0.0",
         "js-yaml": "^3.10.0",
+        "lodash": "^4.17.10",
         "oas-raml-converter": "1.0.14",
+        "pluralize": "^7.0.0",
         "request": "^2.83.0",
         "tslib": "~1.7.1",
         "typescript": "~2.5.3"

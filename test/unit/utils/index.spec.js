@@ -127,7 +127,6 @@ describe('toCamel', () => {
         const result = toCamel(input)
 
         // then
-        // expect(result).toEqual({ test: { name: 'snakeCase', fields: [ { name: 'fieldSnakeCase'}]}})
         expect(result).toEqual(
             {
                 test: {
