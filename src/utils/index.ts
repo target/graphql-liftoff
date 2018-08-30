@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import * as _ from 'lodash'
 import * as request from 'request'
 import * as pkg from '../../package.json'
 
@@ -47,7 +48,7 @@ export function parserUsage(parser: string, args: Arg[]) {
     })
 }
 
-function convertSnakeToCamel(s: string): string {
+ function convertSnakeToCamel(s: string): string {
     return s.replace(/(\_\w)/g, m => m[1].toUpperCase())
 }
 
@@ -56,7 +57,7 @@ export function toCamel(ast: AST): AST {
         .keys(ast)
         .reduce((acc: AST, cur: string, idx: number) => {
             acc[cur] = {
-                name: convertSnakeToCamel(ast[cur].name),
+                name: convertSnakeToPascal(ast[cur].name),
                 description: ast[cur].description,
                 fields: ast[cur].fields.map(f => {
                     f.name = convertSnakeToCamel(f.name)
@@ -68,13 +69,24 @@ export function toCamel(ast: AST): AST {
 }
 
 export function addPrefix(ast: AST, prefix: String): AST {
+
+
+    const types = _.map(ast, 'name')
+
     return Object
         .keys(ast)
         .reduce((acc: AST, cur: string) => {
             acc[cur] = {
                 name: prefix + ast[cur].name,
                 description: ast[cur].description,
-                fields: ast[cur].fields
+                fields: ast[cur].fields.map(f => {
+                    if(types.includes(f.type)){
+                        f.type = `${prefix}${f.type}`
+                    }else if(types.includes(f.type.slice(1, -1))){
+                        f.type = `[${prefix}${f.type.slice(1, -1)}]`
+                    }
+                    return f
+                })
             } as GraphQLType
             return acc
         }, {} as AST)
@@ -90,4 +102,8 @@ export function getOptionValue(options: any, short: string, long: string): any {
     } else if (options.hasOwnProperty(long)) {
         return options[long]
     }
+}
+
+export function convertSnakeToPascal(s: string): string {
+    return convertSnakeToCamel(s).replace(/^\w/, c => c.toUpperCase())
 }

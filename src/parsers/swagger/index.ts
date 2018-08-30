@@ -1,6 +1,8 @@
 import * as yml from 'js-yaml'
 import * as converter from 'oas-raml-converter'
-import { addPrefix, getOptionValue, isOptionSet, parserUsage, toCamel } from '../../utils'
+import * as pluralize from 'pluralize'
+
+import { addPrefix, convertSnakeToPascal, getOptionValue, isOptionSet, parserUsage, toCamel } from '../../utils'
 
 let isYAML: boolean = false
 let isPrefix: boolean = false
@@ -54,16 +56,27 @@ function parseDefinitions(definitions: any[], ast: AST = {} as AST): AST {
 function parseDefinition(d: any, ast: AST): void {
     // no duplicate types
     if (!ast[d.name]) {
-        if ((d.internalType === 'object' && d.hasOwnProperty('properties')) || !d.internalType) {
+        if ((d.internalType === 'object' && d.hasOwnProperty('properties')) || !d.internalType || ((d.internalType === 'array') && d.items.hasOwnProperty('properties'))) {
 
             const astType = {} as GraphQLType
 
             // name and description
-            astType.name = d.name
+            if (d.internalType === 'array') {
+                astType.name = convertSnakeToPascal(pluralize(d.name, 1))
+            }else {
+                astType.name = convertSnakeToPascal(d.name)
+            }
             astType.description = d.description || d._default
 
             // fields
-            astType.fields = d.properties.map((p: any) => {
+            let properties
+            if (d.internalType === 'array') {
+                properties = d.items.properties
+            }else {
+                properties = d.properties
+            }
+
+            astType.fields = properties.map((p: any) => {
                 let name
                 let description
                 let type
@@ -71,12 +84,22 @@ function parseDefinition(d: any, ast: AST): void {
                 name = p.name
                 description = p.description || p._default
 
-                if (p.internalType === 'object') {
-                    type = p.name
+                if (p.internalType === 'object' || (!p.internalType && p.hasOwnProperty('properties'))) {
+                    type = convertSnakeToPascal(p.name)
                     parseDefinition(p, ast)
-                } else if (p.internaltype === 'array') {
-                    type = `[${p.items.reference}]`
-                } else {
+                } else if (p.internalType === 'array') {
+                    if (p.items.reference) {
+                        type = `[${p.items.reference}]`
+                    }else if (p.items.internalType === 'object') {
+                        type = `[${convertSnakeToPascal(pluralize(p.name, 1))}]`
+                        parseDefinition(p, ast)
+                    }else {
+                        type = `[${convertType(p.internalType)}]`
+                    }
+                }else if (!p.internalType && p.reference) {
+                    type = convertSnakeToPascal(p.reference)
+
+                }else {
                     type = convertType(p.internalType)
                 }
                 return {
