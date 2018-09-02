@@ -65,7 +65,6 @@
     "interface-name": [true, "never-prefix"],
     "no-default-export": true,
     "no-require-imports": true,
-    "no-unused-variable": true,
     "typedef": [true, "call-signature"]
   },
   "rulesDirectory": []
