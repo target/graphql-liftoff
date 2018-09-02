@@ -58,7 +58,7 @@
         "babel-preset-node6": "^11.0.0",
         "js-yaml": "^3.10.0",
         "lodash": "^4.17.10",
-        "oas-raml-converter": "1.0.14",
+        "oas-raml-converter": "1.1.38",
         "pluralize": "^7.0.0",
         "request": "^2.83.0",
         "tslib": "~1.7.1",
