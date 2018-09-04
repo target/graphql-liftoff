@@ -2,6 +2,7 @@
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 [![travis](https://travis-ci.org/target/graphql-liftoff.svg)](https://travis-ci.org/target/graphql-liftoff)
+[![Coverage Status](https://coveralls.io/repos/github/target/graphql-liftoff/badge.svg?branch=master)](https://coveralls.io/github/target/graphql-liftoff?branch=master)
 [![release](http://img.shields.io/github/release/target/graphql-liftoff.svg)](https://github.com/target/graphql-liftoff/releases/latest)
 [![watch](https://img.shields.io/github/watchers/target/graphql-liftoff.svg?style=social)](https://github.com/target/graphql-liftoff/watchers)
 [![star](https://img.shields.io/github/stars/target/graphql-liftoff.svg?style=social)](https://github.com/target/graphql-liftoff/stargazers)
