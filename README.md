@@ -16,6 +16,7 @@
 ![graphql-liftoff demo](resources/example.gif)
 
 # Roadmap
+
 - [x] Swagger 2.0 support
 - [ ] 100% unit test code coverage
 - [ ] CLI integration tests
@@ -57,14 +58,30 @@ coverage     # open html coverage in browser (MacOS only)
 ```
 
 # Module Usage
+
 graphql-liftoff exports an `async generateSchema` function, which returns a stringified Graphql Schema
 
 ```javascript
-await generateSchema('swagger', {'yaml': true, data: './example-swagger.yaml'}).then(schema => {
-    console.log(schema)
-}).catch(err => {
-    console.error(err)
+//Swagger v2.0
+await generateSchema('swagger', { yaml: true, data: './example-swagger.yaml' })
+  .then(schema => {
+    console.log(schema);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+
+//Swagger v1.0
+await generateSchema('swagger1', {
+  res: './path/to/resource.json',
+  api: './path/to/apideclarations'
 })
+  .then(schema => {
+    console.log(schema);
+  })
+  .catch(err => {
+    console.error(err);
+  });
 ```
 
 # Bugs and Feature Requests
@@ -86,6 +103,7 @@ A huge shoutout to all contributors and supporters of this project. THANK YOU!
 </a>
 
 # Copyright and License
+
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
 Copyright (c) 2017 Target Brands, Inc.
