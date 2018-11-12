@@ -10,6 +10,7 @@ export async function generateSchema(
         if (options.hasOwnProperty('parserUsage')) {
             parsers[parser].usage(options.parser);
         } else {
+            console.log('options', options);
             return getContent(options.data)
                 .then(c => parsers[parser].parse(c, options)) // tslint:disable-line promise-function-async
                 .then((r: AST) => buildSchema(r))

@@ -56,6 +56,11 @@ export function usage(parser: string): void {
             short: 'y',
             long: 'yaml',
             description: 'parse swagger specification of YAML format'
+        },
+        {
+            short: 'd',
+            long: 'data',
+            description: 'The swagger 2.0+ yml or json file location/url'
         }
     ];
     parserUsage(parser, args);
