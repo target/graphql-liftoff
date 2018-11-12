@@ -1,0 +1,11 @@
+{
+    "apiVersion": "v1",
+    "swaggerVersion": "1.2",
+    "apis": [
+        {
+            "path": "/projects",
+            "description": "A list of projects"
+        }
+    ],
+    "info": {}
+}
